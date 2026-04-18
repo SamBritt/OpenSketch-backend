@@ -1,0 +1,368 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "userName": "sambritt2",
+            "firstName": "Sam",
+            "lastName": "Britt",
+            "images": [
+                {
+                    "imageId": 1
+                },
+                {
+                    "imageId": 2
+                },
+                {
+                    "imageId": 3
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "userName": "Simple Greg 44",
+            "firstName": "Greg",
+            "lastName": "Johnson",
+            "images": [
+                {
+                    "imageId": 4
+                },
+                {
+                    "imageId": 5
+                },
+                {
+                    "imageId": 6
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "userName": "ameterasu",
+            "firstName": "Meghan",
+            "lastName": "McHonahoolagan",
+            "images": [
+                {
+                    "imageId": 7
+                },
+                {
+                    "imageId": 8
+                },
+                {
+                    "imageId": 9
+                }
+            ]
+        }
+    ],
+    "images": [
+        {
+            "id": 1,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Dog Painting with really long title, longer than normal",
+            "description": "This is a painting of my dog I made a while back",
+            "likes": 68,
+            "views": 456,
+            "comments": [
+                {
+                    "commentId": 1,
+                    "userId": 2
+                },
+                {
+                    "commentId": 10,
+                    "userId": 3
+                },
+                {
+                    "commentId": 11,
+                    "userId": 2
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Chicken Monster",
+            "description": "Inspired by my dream",
+            "likes": 99,
+            "views": 3899,
+            "comments": [
+                {
+                    "commentId": 2,
+                    "userId": 3
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Enemy at the Gates",
+            "description": "Wowwww this was fun to make!!",
+            "likes": 234,
+            "views": 4577,
+            "comments": [
+                {
+                    "commentId": 3,
+                    "userId": 2
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "userId": 2,
+            "userName": "Simple Greg 44",
+            "name": "Charmander XL",
+            "description": "Loved watching the show growing up. Hope you all enjoy!",
+            "likes": 1233,
+            "views": 4444,
+            "comments": [
+                {
+                    "commentId": 4,
+                    "userId": 1
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "userId": 2,
+            "userName": "Simple Greg 44",
+            "name": "When in Doubt...",
+            "description": "A long breath of wind hit my face...",
+            "likes": 622,
+            "views": 2133,
+            "comments": [
+                {
+                    "commentId": 5,
+                    "userId": 3
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "userId": 2,
+            "userName": "Simple Greg 44",
+            "name": "Battle between two soldiers",
+            "description": "Let me know what you think!",
+            "likes": 13,
+            "views": 44,
+            "comments": [
+                {
+                    "commentId": 6,
+                    "userId": 1
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "userId": 3,
+            "userName": "ameterasu",
+            "name": "Random Manag Character #2",
+            "description": "Testing out the waters with this new eye style",
+            "likes": 564,
+            "views": 101,
+            "comments": [
+                {
+                    "commentId": 7,
+                    "userId": 1
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "userId": 3,
+            "userName": "ameterasu",
+            "name": "Mickey Mouse",
+            "description": "Huh hah! I love Disney. Fun to make, too.",
+            "likes": 3455,
+            "views": 5655,
+            "comments": [
+                {
+                    "commentId": 8,
+                    "userId": 1
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "userId": 3,
+            "userName": "ameterasu",
+            "name": "My Cat, Chester",
+            "description": "Painting of my cat, Chester!! :)",
+            "likes": 64,
+            "views": 33,
+            "comments": [
+                {
+                    "commentId": 9,
+                    "userId": 2
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Gingo Dongo",
+            "description": "A shaman, an unstoppable force...",
+            "likes": 2,
+            "views": 26,
+            "comments": []
+        },
+        {
+            "id": 11,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Larry the Cucumber",
+            "description": "My favorite show!",
+            "likes": 234,
+            "views": 1167,
+            "comments": []
+        },
+        {
+            "id": 12,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "FEZAR THE SAGA-MAN 248",
+            "description": "ultron super mega man",
+            "likes": 56744,
+            "views": 324523,
+            "comments": []
+        },
+        {
+            "id": 13,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 1.0",
+            "description": "Painting of Ultron 1.0!! :)",
+            "likes": 64,
+            "views": 456,
+            "comments": []
+        },
+        {
+            "id": 14,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 2.0",
+            "description": "Painting of Ultron 2.0!! :)",
+            "likes": 12,
+            "views": 33,
+            "comments": []
+        },
+        {
+            "id": 15,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 2.0",
+            "description": "Painting of Ultron 2.0!! :)",
+            "likes": 12,
+            "views": 33,
+            "comments": []
+        },
+        {
+            "id": 16,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 3.0",
+            "description": "Painting of Ultron 3.0!! :)",
+            "likes": 12,
+            "views": 33,
+            "comments": []
+        },
+        {
+            "id": 17,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 4.0",
+            "description": "Painting of Ultron 4.0!! :)",
+            "likes": 12,
+            "views": 33,
+            "comments": []
+        },
+        {
+            "id": 18,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 5.0",
+            "description": "Painting of Ultron 5.0!! :)",
+            "likes": 12,
+            "views": 33,
+            "comments": []
+        },
+        {
+            "id": 19,
+            "userId": 1,
+            "userName": "sambritt2",
+            "name": "Ultron 6.0",
+            "description": "Painting of Ultron 6.0!! :)",
+            "likes": 12,
+            "views": 33,
+            "comments": []
+        }
+    ],
+    "comments": [
+        {
+            "id": 1,
+            "userId": 2,
+            "imageId": 1,
+            "comment": "Wow, this is amazing"
+        },
+        {
+            "id": 2,
+            "userId": 3,
+            "imageId": 2,
+            "comment": "How did you do this?"
+        },
+        {
+            "id": 3,
+            "userId": 2,
+            "imageId": 3,
+            "comment": "PM me, I'd like to work with you sometime? Maybe we can collab, and make an entire war painting together. Either way, dope painting. Let me know!!"
+        },
+        {
+            "id": 4,
+            "userId": 1,
+            "imageId": 4,
+            "comment": "Man, the colors! o.o"
+        },
+        {
+            "id": 5,
+            "userId": 3,
+            "imageId": 5,
+            "comment": "Killer painting"
+        },
+        {
+            "id": 6,
+            "userId": 1,
+            "imageId": 6,
+            "comment": "What made you choose these colors?"
+        },
+        {
+            "id": 7,
+            "userId": 1,
+            "imageId": 7,
+            "comment": "Dude.... so good!!!!"
+        },
+        {
+            "id": 8,
+            "userId": 1,
+            "imageId": 8,
+            "comment": "I like this! :)"
+        },
+        {
+            "id": 9,
+            "userId": 2,
+            "imageId": 9,
+            "comment": "Keep it going, man!"
+        },
+        {
+            "id": 10,
+            "userId": 3,
+            "imageId": 1,
+            "comment": "Holy moly!"
+        },
+        {
+            "id": 11,
+            "userId": 2,
+            "imageId": 1,
+            "comment": "This is by far the greatest..single most astounding piece of dog art I have ever seen. Is this for sale? I will trade you my house, car, dog, and koi pond just for this painting.. O.O"
+        }
+    ]
+}
