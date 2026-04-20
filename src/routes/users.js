@@ -1,16 +1,19 @@
 const { Router } = require('express');
-const data = require('../data/data.json');
+const prisma = require('../lib/prisma');
 
 const router = Router();
 
 // GET /api/users
-router.get('/', (req, res) => {
-  res.json(data.users);
+router.get('/', async (req, res) => {
+  const users = await prisma.user.findMany();
+  res.json(users);
 });
 
 // GET /api/users/:id
-router.get('/:id', (req, res) => {
-  const user = data.users.find(u => u.id === parseInt(req.params.id));
+router.get('/:id', async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(req.params.id) },
+  });
   if (!user) return res.status(404).json({ error: 'User not found' });
   res.json(user);
 });
