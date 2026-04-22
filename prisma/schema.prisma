@@ -20,6 +20,7 @@ model Image {
   userId      Int
   name        String
   description String
+  imageUrl    String
   likes       Int       @default(0)
   views       Int       @default(0)
   user        User      @relation(fields: [userId], references: [id])

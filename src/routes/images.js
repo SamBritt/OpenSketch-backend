@@ -30,6 +30,17 @@ router.get('/user/:userId', async (req, res) => {
   res.json(images.map(flattenImage));
 });
 
+// POST /api/images
+router.post('/', async (req, res) => {
+  const { name, description, userId, imageUrl } = req.body;
+  if (!name || !userId) return res.status(400).json({ error: 'name and userId are required' });
+  const image = await prisma.image.create({
+    data: { name, description: description ?? '', userId: parseInt(userId), imageUrl },
+    include: withUser,
+  });
+  res.status(201).json(flattenImage(image));
+});
+
 // GET /api/images/:id
 router.get('/:id', async (req, res) => {
   const image = await prisma.image.findUnique({
