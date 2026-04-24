@@ -6,33 +6,48 @@ const router = Router();
 const flattenImage = ({ user, likedBy, ...img }) => ({
   ...img,
   userName: user.userName,
-  liked: likedBy.length > 0,
+  liked: likedBy ? likedBy.length > 0 : false,
 });
-const withUser = {
+
+const buildWithUser = (userId) => ({
   user: { select: { userName: true } },
-  likedBy: { where: { userId: 1 } },
-};
+  ...(userId ? { likedBy: { where: { userId } } } : {}),
+});
+
+const buildListSelect = (userId) => ({
+  id: true,
+  userId: true,
+  name: true,
+  description: true,
+  likes: true,
+  views: true,
+  user: { select: { userName: true } },
+  ...(userId ? { likedBy: { where: { userId } } } : {}),
+});
 
 // GET /api/images
 router.get('/', async (req, res) => {
-  const images = await prisma.image.findMany({ include: withUser });
+  const userId = parseInt(req.query.userId) || null;
+  const images = await prisma.image.findMany({ select: buildListSelect(userId) });
   res.json(images.map(flattenImage));
 });
 
 // GET /api/images/username/:userName  (must be before /:id)
 router.get('/username/:userName', async (req, res) => {
+  const userId = parseInt(req.query.userId) || null;
   const images = await prisma.image.findMany({
     where: { user: { userName: req.params.userName } },
-    include: withUser,
+    select: buildListSelect(userId),
   });
   res.json(images.map(flattenImage));
 });
 
 // GET /api/images/user/:userId  (must be before /:id)
 router.get('/user/:userId', async (req, res) => {
+  const userId = parseInt(req.query.userId) || null;
   const images = await prisma.image.findMany({
     where: { userId: parseInt(req.params.userId) },
-    include: withUser,
+    select: buildListSelect(userId),
   });
   res.json(images.map(flattenImage));
 });
@@ -43,7 +58,7 @@ router.post('/', async (req, res) => {
   if (!name || !userId) return res.status(400).json({ error: 'name and userId are required' });
   const image = await prisma.image.create({
     data: { name, description: description ?? '', userId: parseInt(userId), imageUrl },
-    include: withUser,
+    include: buildWithUser(parseInt(userId)),
   });
   res.status(201).json(flattenImage(image));
 });
@@ -51,11 +66,13 @@ router.post('/', async (req, res) => {
 // POST /api/images/:id/like
 router.post('/:id/like', async (req, res) => {
   const imageId = parseInt(req.params.id);
-  await prisma.like.create({ data: { userId: 1, imageId } });
+  const userId = parseInt(req.body.userId);
+  if (!userId) return res.status(400).json({ error: 'userId is required' });
+  await prisma.like.create({ data: { userId, imageId } });
   const image = await prisma.image.update({
     where: { id: imageId },
     data: { likes: { increment: 1 } },
-    include: withUser,
+    include: buildWithUser(userId),
   });
   res.json(flattenImage(image));
 });
@@ -63,20 +80,23 @@ router.post('/:id/like', async (req, res) => {
 // DELETE /api/images/:id/like
 router.delete('/:id/like', async (req, res) => {
   const imageId = parseInt(req.params.id);
-  await prisma.like.delete({ where: { userId_imageId: { userId: 1, imageId } } });
+  const userId = parseInt(req.body.userId);
+  if (!userId) return res.status(400).json({ error: 'userId is required' });
+  await prisma.like.delete({ where: { userId_imageId: { userId, imageId } } });
   const image = await prisma.image.update({
     where: { id: imageId },
     data: { likes: { decrement: 1 } },
-    include: withUser,
+    include: buildWithUser(userId),
   });
   res.json(flattenImage(image));
 });
 
 // GET /api/images/:id
 router.get('/:id', async (req, res) => {
+  const userId = parseInt(req.query.userId) || null;
   const image = await prisma.image.findUnique({
     where: { id: parseInt(req.params.id) },
-    include: withUser,
+    include: buildWithUser(userId),
   });
   if (!image) return res.status(404).json({ error: 'Image not found' });
   res.json(flattenImage(image));
