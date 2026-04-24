@@ -13,8 +13,28 @@ router.get('/', async (req, res) => {
 router.get('/image/:imageId', async (req, res) => {
   const comments = await prisma.comment.findMany({
     where: { imageId: parseInt(req.params.imageId) },
+    include: { user: { select: { userName: true } } },
   });
-  res.json(comments);
+  res.json(comments.map(({ user, ...c }) => ({ ...c, userName: user.userName })));
+});
+
+// POST /api/comments
+router.post('/', async (req, res) => {
+  const { userId, imageId, comment } = req.body;
+  if (!userId || !imageId || !comment) {
+    return res.status(400).json({ error: 'userId, imageId, and comment are required' });
+  }
+  const { user, ...newComment } = await prisma.comment.create({
+    data: { userId: parseInt(userId), imageId: parseInt(imageId), comment },
+    include: { user: { select: { userName: true } } },
+  });
+  res.status(201).json({ ...newComment, userName: user.userName });
+});
+
+// DELETE /api/comments/:id
+router.delete('/:id', async (req, res) => {
+  await prisma.comment.delete({ where: { id: parseInt(req.params.id) } });
+  res.status(204).end();
 });
 
 // GET /api/comments/:id

@@ -13,6 +13,7 @@ model User {
   lastName  String
   images    Image[]
   comments  Comment[]
+  likes     Like[]
 }
 
 model Image {
@@ -25,6 +26,7 @@ model Image {
   views       Int       @default(0)
   user        User      @relation(fields: [userId], references: [id])
   comments    Comment[]
+  likedBy     Like[]
 }
 
 model Comment {
@@ -34,4 +36,14 @@ model Comment {
   comment String
   user    User   @relation(fields: [userId], references: [id])
   image   Image  @relation(fields: [imageId], references: [id])
+}
+
+model Like {
+  id      Int   @id @default(autoincrement())
+  userId  Int
+  imageId Int
+  user    User  @relation(fields: [userId], references: [id])
+  image   Image @relation(fields: [imageId], references: [id])
+
+  @@unique([userId, imageId])
 }

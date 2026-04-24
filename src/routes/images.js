@@ -3,8 +3,15 @@ const prisma = require('../lib/prisma');
 
 const router = Router();
 
-const flattenImage = ({ user, ...img }) => ({ ...img, userName: user.userName });
-const withUser = { user: { select: { userName: true } } };
+const flattenImage = ({ user, likedBy, ...img }) => ({
+  ...img,
+  userName: user.userName,
+  liked: likedBy.length > 0,
+});
+const withUser = {
+  user: { select: { userName: true } },
+  likedBy: { where: { userId: 1 } },
+};
 
 // GET /api/images
 router.get('/', async (req, res) => {
@@ -39,6 +46,30 @@ router.post('/', async (req, res) => {
     include: withUser,
   });
   res.status(201).json(flattenImage(image));
+});
+
+// POST /api/images/:id/like
+router.post('/:id/like', async (req, res) => {
+  const imageId = parseInt(req.params.id);
+  await prisma.like.create({ data: { userId: 1, imageId } });
+  const image = await prisma.image.update({
+    where: { id: imageId },
+    data: { likes: { increment: 1 } },
+    include: withUser,
+  });
+  res.json(flattenImage(image));
+});
+
+// DELETE /api/images/:id/like
+router.delete('/:id/like', async (req, res) => {
+  const imageId = parseInt(req.params.id);
+  await prisma.like.delete({ where: { userId_imageId: { userId: 1, imageId } } });
+  const image = await prisma.image.update({
+    where: { id: imageId },
+    data: { likes: { decrement: 1 } },
+    include: withUser,
+  });
+  res.json(flattenImage(image));
 });
 
 // GET /api/images/:id
