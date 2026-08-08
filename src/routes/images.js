@@ -7,11 +7,12 @@ const router = Router();
 const flattenImage = ({ user, likedBy, ...img }) => ({
   ...img,
   userName: user.userName,
+  avatarUrl: user.avatarUrl,
   liked: likedBy ? likedBy.length > 0 : false,
 });
 
 const buildWithUser = (userId) => ({
-  user: { select: { userName: true } },
+  user: { select: { userName: true, avatarUrl: true } },
   ...(userId ? { likedBy: { where: { userId } } } : {}),
 });
 
@@ -22,7 +23,7 @@ const buildListSelect = (userId) => ({
   description: true,
   likes: true,
   views: true,
-  user: { select: { userName: true } },
+  user: { select: { userName: true, avatarUrl: true } },
   ...(userId ? { likedBy: { where: { userId } } } : {}),
 });
 

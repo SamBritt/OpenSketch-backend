@@ -17,6 +17,7 @@ All routes mount under `/api` in `src/index.js`:
 - `/api/users`   → `src/routes/users.js`
 - `/api/images`  → `src/routes/images.js`
 - `/api/comments`→ `src/routes/comments.js`
+- `/api/palettes`→ `src/routes/palettes.js`
 - `/api/health`  → inline in `src/routes/index.js`
 
 ## Auth
@@ -44,20 +45,30 @@ All routes mount under `/api` in `src/index.js`:
 - `POST /:id/like`   — requireAuth, `userId` from `req.user.id`
 - `DELETE /:id/like` — requireAuth, `userId` from `req.user.id`
 - All image responses pass through `flattenImage` helper (strips nested `user`/`likedBy`, adds `userName` + `liked`)
+- Image responses include `avatarUrl` alongside `userName` (flattened from `user`), same as comment routes
 - Named-segment routes (`/username/:x`, `/user/:x`) MUST be registered before `/:id`
 
 ## Comment routes (`/api/comments`)
 - `GET  /`              — public
-- `GET  /image/:imageId`— public (before /:id), response includes `avatarUrl` alongside `userName` (flattened from `user`)
-- `POST /`              — requireAuth, `userId` from `req.user.id`, response includes `avatarUrl` alongside `userName`
+- `GET  /image/:imageId`— public (before /:id), response includes `avatarUrl` alongside `userName` (flattened from `user`) and `createdAt`
+- `POST /`              — requireAuth, `userId` from `req.user.id`, response includes `avatarUrl` alongside `userName` and `createdAt`
 - `DELETE /:id`         — requireAuth, ownership check (`comment.userId === req.user.id`)
 - `GET  /:id`           — public
 
+## Palette routes (`/api/palettes`)
+All routes require `requireAuth` and are scoped to `req.user.id` (user-private data, unlike comments/images which have public read routes):
+- `GET  /`      — `prisma.palette.findMany({ where: { userId: req.user.id } })`
+- `POST /`      — body `{ name }`, 400 if missing, creates `{ userId: req.user.id, name, colors: [] }`, 201
+- `PATCH /:id`  — body `{ name?, colors? }` (partial, same conditional-`data`-object pattern as `PATCH /users/me`), ownership check (404 if missing, 403 if not owner) before update
+- `DELETE /:id` — ownership check (404 if missing, 403 if not owner), then delete, 204
+
 ## Prisma schema (`prisma/schema.prisma`)
-Models: `User`, `Image`, `Comment`, `Like`
+Models: `User`, `Image`, `Comment`, `Like`, `Palette`
 - `User`: id, userName (unique), firstName, lastName, passwordHash (nullable), avatarUrl (nullable)
 - `Image`: id, userId, name, description, imageUrl, likes (denormalized count), views
+- `Comment`: id, userId, imageId, comment, createdAt (`DateTime @default(now())`)
 - `Like`: @@unique([userId, imageId]) — dedup constraint
+- `Palette`: id, userId, name, colors (`String[]`, Postgres native array — no join table)
 - Schema changes: edit schema → `npx prisma migrate dev --name <name>` → `npx prisma generate`
 
 ## Key rules

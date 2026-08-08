@@ -16,6 +16,7 @@ model User {
   images        Image[]
   comments      Comment[]
   likes         Like[]
+  palettes      Palette[]
 }
 
 model Image {
@@ -32,12 +33,13 @@ model Image {
 }
 
 model Comment {
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  imageId Int
-  comment String
-  user    User   @relation(fields: [userId], references: [id])
-  image   Image  @relation(fields: [imageId], references: [id])
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  imageId   Int
+  comment   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  image     Image    @relation(fields: [imageId], references: [id])
 }
 
 model Like {
@@ -48,4 +50,12 @@ model Like {
   image   Image @relation(fields: [imageId], references: [id])
 
   @@unique([userId, imageId])
+}
+
+model Palette {
+  id      Int      @id @default(autoincrement())
+  userId  Int
+  name    String
+  colors  String[]
+  user    User     @relation(fields: [userId], references: [id])
 }
